@@ -268,7 +268,14 @@ async def handle_new_metaphor(update: Update, context: ContextTypes.DEFAULT_TYPE
     )
 
     norm_key = metaphor.strip().lower()
-    data = await asyncio.to_thread(generate_metaphor_data_cached, norm_key)
+    try:
+        data = await asyncio.wait_for(
+            asyncio.to_thread(generate_metaphor_data_cached, norm_key),
+            timeout=45.0
+        )
+    except asyncio.TimeoutError:
+        await update.message.reply_text("❌ Timed out. Try again in 1 min.")
+        return
 
     if data is None:
         generate_metaphor_data_cached.cache_clear()
@@ -339,7 +346,7 @@ def main():
 
     # 🔥 FIXED: removed trailing spaces
     dashscope.api_key = env['DASHSCOPE_API_KEY']
-    dashscope.base_http_api_url = 'https://dashscope-intl.aliyuncs.com/api/v1'
+    dashscope.base_http_api_url = 'https://dashscope.aliyun.com/api/v1'
 
     # 🔥 FIXED: removed trailing spaces in scope
     creds = Credentials.from_service_account_file(
