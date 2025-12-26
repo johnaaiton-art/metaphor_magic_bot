@@ -341,6 +341,10 @@ async def handle_new_metaphor(update: Update, context: ContextTypes.DEFAULT_TYPE
         await update.message.reply_text("❌ Failed to generate content. Please try again.")
         return
 
+    # Normalize synonyms to string if it's a list
+    if isinstance(data['synonyms'], list):
+        data['synonyms'] = ', '.join(data['synonyms'])
+
     # Step 2: Generate image
     image_prompt = data["image_prompt"]
     image_bytes = await to_thread(generate_metaphor_image, image_prompt)
