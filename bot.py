@@ -346,7 +346,7 @@ def main():
 
     # 🔥 FIXED: removed trailing spaces
     dashscope.api_key = env['DASHSCOPE_API_KEY']
-    dashscope.base_http_api_url = 'https://dashscope.aliyun.com/api/v1'
+    dashscope.base_http_api_url = 'https://dashscope-intl.aliyuncs.com/api/v1'
 
     # 🔥 FIXED: removed trailing spaces in scope
     creds = Credentials.from_service_account_file(
