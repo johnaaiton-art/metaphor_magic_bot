@@ -1,0 +1,13 @@
+﻿# Secrets
+.env
+creds/gsheet_creds.json
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.env/
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,6 @@
+﻿python-telegram-bot==20.7
+gspread==6.1.2
+google-auth==2.23.4
+python-dotenv==1.0.1
+dashscope>=1.19.0
+requests==2.31.0

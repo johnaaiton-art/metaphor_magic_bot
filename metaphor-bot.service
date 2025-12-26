@@ -1,0 +1,14 @@
+﻿[Unit]
+Description=Metaphor Magic Telegram Bot
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/metaphor_magic_bot
+ExecStart=/home/ubuntu/metaphor_magic_bot/venv/bin/python bot.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
