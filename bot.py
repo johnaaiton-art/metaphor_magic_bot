@@ -42,7 +42,7 @@ IMAGE_MODEL = 'wan2.2-t2i-flash'
 COOLDOWN_SECONDS = 30
 MAX_METAPHOR_LENGTH = 100
 IMAGE_TIMEOUT = 60
-MAX_CAPTION = 900
+MAX_CAPTION = 1000
 
 # Hardcoded Google Sheet ID (more reliable than name lookup)
 SHEET_ID = "1vxzfYe7q-DAtK_CAWLrpguxWwhjNuOaz-tFUczv_XNs"
@@ -177,7 +177,7 @@ Generate the following in ENGLISH only:
 1. Definition
 2. 3–5 synonyms
 3. Translations: Spanish, Chinese (simplified), Russian
-4. FOUR short dialogues: Office, Parent-Child, Project Team, Lovers/Friends
+4. FOUR short dialogues (2-3 exchanges each max, formatted with each speaker's line on a new line, e.g. Speaker: Text\nSpeaker: Text\nSpeaker: Text): Office, Parent-Child, Project Team, Lovers/Friends
 5. ONE category from:
 business-strategy, performance-effort, growth-results, challenges-obstacles,
 communication-collaboration, predicting, no-category
@@ -363,11 +363,11 @@ async def handle_new_metaphor(update: Update, context: ContextTypes.DEFAULT_TYPE
         f"• ES: {esc(data['spanish'])}\n"
         f"• ZH: {esc(data['chinese'])}\n"
         f"• RU: {esc(data['russian'])}\n\n"
-        f"💬 *Examples*:\n"
-        f"• Office: {esc(data['office_talk'])}\n"
-        f"• Parent\\-Child: {esc(data['parent_child'])}\n"
-        f"• Project: {esc(data['project_team'])}\n"
-        f"• Friends: {esc(data['lovers_friends'])}\n\n"
+        f"💬 *Examples*:\n\n"
+        f"💼 • **Office**:\n{esc(data['office_talk'])}\n\n"
+        f"👪 • **Parent\\-Child**:\n{esc(data['parent_child'])}\n\n"
+        f"👥 • **Project Team**:\n{esc(data['project_team'])}\n\n"
+        f"❤️ • **Lovers/Friends**:\n{esc(data['lovers_friends'])}\n\n"
         f"🔖 *Category*: {esc(data['category'])}\n\n"
         f"🎨 *Image Prompt*: _{esc(image_prompt)}_"
     )
