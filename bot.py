@@ -55,7 +55,7 @@ def validate_environment():
     required_vars = {
         'TELEGRAM_BOT_TOKEN': os.getenv('TELEGRAM_BOT_TOKEN'),
         'DASHSCOPE_API_KEY': os.getenv('DASHSCOPE_API_KEY'),
-        'GOOGLE_SHEET_NAME': os.getenv('GOOGLE_SHEET_NAME'),
+        'GOOGLE_SHEET_NAME': os.getenv('GOOGLE_SHEET_NAME'),  # kept for .env compatibility, but unused
         'TELEGRAM_GROUP_CHAT_ID': os.getenv('TELEGRAM_GROUP_CHAT_ID')
     }
     missing = [k for k, v in required_vars.items() if not v]
@@ -337,15 +337,21 @@ async def handle_new_metaphor(update: Update, context: ContextTypes.DEFAULT_TYPE
 def main():
     env = validate_environment()
 
+    # 🔥 FIXED: removed trailing spaces
     dashscope.api_key = env['DASHSCOPE_API_KEY']
     dashscope.base_http_api_url = 'https://dashscope-intl.aliyuncs.com/api/v1'
 
+    # 🔥 FIXED: removed trailing spaces in scope
     creds = Credentials.from_service_account_file(
         "creds/gsheet_creds.json",
         scopes=["https://www.googleapis.com/auth/spreadsheets"]
     )
     gc = gspread.authorize(creds)
-    sheet = gc.open(env['GOOGLE_SHEET_NAME']).sheet1
+    
+    # 🔥 Use Sheet ID (more reliable than name)
+    SHEET_ID = "1vxzfYe7q-DAtK_CAWLrpguxWwhjNuOaz-tFUczv_XNs"
+    sheet = gc.open_by_key(SHEET_ID).sheet1
+    
     validate_sheet_headers(sheet)
 
     app = Application.builder().token(env['TELEGRAM_BOT_TOKEN']).build()
